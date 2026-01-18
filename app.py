@@ -16,6 +16,9 @@ from solders.transaction import Transaction
 
 load_dotenv()
 
+
+
+
 # ====== ENV ======
 SOLANA_RPC_URL = os.getenv("SOLANA_RPC_URL", "https://api.devnet.solana.com")
 REWARD_SOL_DEFAULT = float(os.getenv("REWARD_SOL_DEFAULT", "0.01"))
@@ -49,7 +52,10 @@ def cleanup_paid():
     for k in expired:
         PAID.pop(k, None)
 
-
+@app.get("/routes")
+def routes():
+    return jsonify(sorted([str(r) for r in app.url_map.iter_rules()]))
+    
 @app.get("/health")
 def health():
     return jsonify({
